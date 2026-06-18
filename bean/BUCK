@@ -1,0 +1,22 @@
+
+java_sources(
+  name = 'officebean-src',
+  srcs = glob(['com/**']),
+  root = '.',
+  visibility = ['PUBLIC'],
+)
+
+java_doc(
+  name = 'officebean-javadoc',
+  title = 'FreedomOffice API',
+  pkgs = [
+    'com.sun.star.comp.beans',
+  ],
+  paths = ['.'],
+  srcs = glob(['com/**']),
+  deps = [
+    '//:freedomoffice',
+    '//:officebean',
+  ],
+  visibility = ['PUBLIC'],
+)

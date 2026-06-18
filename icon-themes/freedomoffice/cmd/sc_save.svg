@@ -1,0 +1,12 @@
+<!--
+  Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+  Licensed under CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+  FreedomOffice - Based on LibreOffice technology.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <path d="M2 4C2 2.89543 2.89543 2 4 2H10.5858C10.851 2 11.1054 2.10536 11.2929 2.29289L13.7071 4.70711C13.8946 4.89464 14 5.149 14 5.41421V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4Z" fill="none" stroke="#424242" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M5 2V6H10V2" fill="none" stroke="#424242" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M5 10H11" fill="none" stroke="#424242" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M5 14V11H11V14" fill="none" stroke="#424242" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="6" y="8" width="4" height="2" rx="0.3" fill="none" stroke="#424242" stroke-width="1.2"/>
+</svg>

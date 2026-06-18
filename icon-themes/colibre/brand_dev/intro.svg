@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 644 199" width="644" height="199">
+  <metadata>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+      <rdf:Description rdf:about="">
+        <dc:creator>Natalie Spiva - AcreetionOS Project</dc:creator>
+        <dc:rights>Natalie Spiva - AcreetionOS Project</dc:rights>
+        <xmp:AttributionName>Natalie Spiva - AcreetionOS Project</xmp:AttributionName>
+        <dc:description>FreedomOffice branding asset - The free and open office suite</dc:description>
+        <xmp:CreatorTool>Natalie Spiva - AcreetionOS Project Art Generator</xmp:CreatorTool>
+      </rdf:Description>
+    </rdf:RDF>
+  </metadata>
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f7fa"/>
+      <stop offset="100%" stop-color="#e8ecf1"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a6bd8"/>
+      <stop offset="100%" stop-color="#144a9e"/>
+    </linearGradient>
+    <linearGradient id="accentLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(24,90,189,0)"/>
+      <stop offset="50%" stop-color="rgba(24,90,189,0.08)"/>
+      <stop offset="100%" stop-color="rgba(24,90,189,0)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="644" height="199" fill="url(#bgGrad)" rx="0"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="644" height="4" fill="url(#blueGrad)"/>
+
+  <!-- Subtle horizontal separator -->
+  <rect x="40" y="155" width="564" height="1" fill="url(#accentLine)"/>
+
+  <!-- MS Office-style icon -->
+  <g transform="translate(40, 50)">
+    <rect x="0" y="0" width="90" height="90" rx="20" ry="20" fill="url(#blueGrad)"/>
+    <!-- White stylized "F" -->
+    <g transform="translate(45, 45)" fill="#ffffff">
+      <rect x="-22" y="-34" width="16" height="68" rx="4" ry="4"/>
+      <rect x="-22" y="-34" width="38" height="14" rx="4" ry="4"/>
+      <rect x="-22" y="-4" width="30" height="14" rx="4" ry="4"/>
+    </g>
+    <!-- Subtle diagonal -->
+    <line x1="8" y1="72" x2="82" y2="18" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.1"/>
+  </g>
+
+  <!-- "FreedomOffice" wordmark -->
+  <text x="148" y="84" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="48" font-weight="600" fill="#185ABD" letter-spacing="-0.5">FreedomOffice</text>
+
+  <!-- Version line -->
+  <text x="148" y="112" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="rgba(24,90,189,0.5)" font-weight="400">Version 25.2.1 • Built on LibreOffice Technology</text>
+
+  <!-- Tagline -->
+  <text x="148" y="140" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="rgba(0,0,0,0.35)" font-weight="300" letter-spacing="2">THE FREE &amp; OPEN OFFICE SUITE</text>
+
+  <!-- Bottom-right credit -->
+  <text x="632" y="192" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="rgba(0,0,0,0.2)" text-anchor="end" font-weight="300">Natalie Spiva - AcreetionOS Project</text>
+</svg>

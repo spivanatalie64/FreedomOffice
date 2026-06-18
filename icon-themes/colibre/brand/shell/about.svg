@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 180" width="500" height="180">
+  <metadata>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+      <rdf:Description rdf:about="">
+        <dc:creator>Natalie Spiva - AcreetionOS Project</dc:creator>
+        <dc:rights>Natalie Spiva - AcreetionOS Project</dc:rights>
+        <xmp:AttributionName>Natalie Spiva - AcreetionOS Project</xmp:AttributionName>
+        <dc:description>FreedomOffice branding asset - The free and open office suite</dc:description>
+        <xmp:CreatorTool>Natalie Spiva - AcreetionOS Project Art Generator</xmp:CreatorTool>
+      </rdf:Description>
+    </rdf:RDF>
+  </metadata>
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a6bd8"/>
+      <stop offset="100%" stop-color="#185ABD"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8e8e8"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect x="5" y="5" width="490" height="170" rx="16" ry="16" fill="url(#bgGrad)"/>
+
+  <!-- Subtle inner glow -->
+  <rect x="5" y="5" width="490" height="170" rx="16" ry="16" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+
+  <!-- MS Office-style icon: deep blue rounded square with white stylized "F" -->
+  <rect x="30" y="40" width="100" height="100" rx="22" ry="22" fill="#ffffff" opacity="0.95"/>
+
+  <!-- Stylized "F" mark inside the white square -->
+  <g transform="translate(80, 90)" fill="#185ABD">
+    <!-- Vertical stroke of F -->
+    <rect x="-22" y="-38" width="16" height="76" rx="4" ry="4"/>
+    <!-- Top horizontal stroke of F -->
+    <rect x="-22" y="-38" width="44" height="14" rx="4" ry="4"/>
+    <!-- Middle horizontal stroke of F -->
+    <rect x="-22" y="-4" width="34" height="14" rx="4" ry="4"/>
+  </g>
+
+  <!-- Small decorative accent: diagonal slash across the icon like Office's "O" has -->
+  <line x1="44" y1="126" x2="116" y2="54" stroke="#185ABD" stroke-width="3" stroke-linecap="round" opacity="0.15"/>
+
+  <!-- "FreedomOffice" wordmark -->
+  <text x="155" y="85" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="42" font-weight="600" fill="#ffffff" letter-spacing="-0.5">FreedomOffice</text>
+
+  <!-- Tagline -->
+  <text x="155" y="118" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="rgba(255,255,255,0.7)" letter-spacing="4" font-weight="300">THE FREE &amp; OPEN OFFICE SUITE</text>
+
+  <!-- Bottom-right credit line -->
+  <text x="475" y="167" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.35)" text-anchor="end" font-weight="300">Natalie Spiva - AcreetionOS Project</text>
+</svg>

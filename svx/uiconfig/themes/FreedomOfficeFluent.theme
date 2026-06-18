@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="FreedomOffice Fluent">
+    <theme-colors name="FreedomOffice Fluent">
+        <color name="dark1" color="#212121" />
+        <color name="light1" color="#FFFFFF" />
+        <color name="dark2" color="#666666" />
+        <color name="light2" color="#F3F3F3" />
+        <color name="accent1" color="#1B73E8" />
+        <color name="accent2" color="#107C10" />
+        <color name="accent3" color="#D83B01" />
+        <color name="accent4" color="#5C2D91" />
+        <color name="accent5" color="#D13438" />
+        <color name="accent6" color="#00B294" />
+        <color name="hyperlink" color="#1155CC" />
+        <color name="followed-hyperlink" color="#800080" />
+    </theme-colors>
+</theme>

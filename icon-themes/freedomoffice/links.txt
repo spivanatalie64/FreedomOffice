@@ -1,0 +1,23 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+#
+# FreedomOffice - Based on LibreOffice technology.
+# LibreOffice is Copyright (c) The Document Foundation.
+#
+# FreedomOffice Fluent Icon Theme - Symbolic Links
+# ==================================================
+# This file maps icon references to actual icon files.
+# Initially empty - icons are resolved from the colibre fallback theme.
+# As Fluent-style SVG icons are created, add entries here.
+#
+# Format:
+#   target_path source_path
+#
+# Example:
+#   cmd/lc_save.png cmd/lc_save.svg
+#
+# For now, the freedomoffice theme inherits from:
+#   freedomoffice → colibre_svg → colibre → breeze

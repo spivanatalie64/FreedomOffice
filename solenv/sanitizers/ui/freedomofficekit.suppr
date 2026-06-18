@@ -1,0 +1,9 @@
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkLabel[@id='zoomlabel'] orphan-label
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkLabel[@id='redlinelabel'] orphan-label
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkEntry[@id='findbar_entry'] no-labelled-by
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkLabel[@id='findbar_label'] orphan-label
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkComboBoxText[@id='combo_partselector'] no-labelled-by
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkComboBoxText[@id='combo_partsmodeselector'] no-labelled-by
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkComboBoxText[@id='combo_recentunoselector'] no-labelled-by
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkEntry[@id='addressbar_entry'] no-labelled-by
+freedomofficekit/qa/gtktiledviewer/gtv.ui://GtkEntry[@id='formulabar_entry'] no-labelled-by

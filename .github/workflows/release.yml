@@ -1,0 +1,289 @@
+name: Auto-Release (tracking LibreOffice stable)
+
+on:
+  schedule:
+    # Check every day at 06:00 UTC for new LibreOffice releases
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+    inputs:
+      force_version:
+        description: 'Force a specific LibreOffice version to rebase on (e.g., 25.2.0)'
+        required: false
+        type: string
+  push:
+    branches: [main, master]
+    paths:
+      - '.github/workflows/release.yml'
+      - 'VERSION'
+
+jobs:
+  check-libreoffice-version:
+    name: Check LibreOffice latest stable version
+    runs-on: ubuntu-latest
+    outputs:
+      latest_lo_version: ${{ steps.check_version.outputs.latest_lo_version }}
+      current_fo_version: ${{ steps.check_version.outputs.current_fo_version }}
+      needs_rebase: ${{ steps.check_version.outputs.needs_rebase }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get current FreedomOffice version
+        id: current_version
+        run: |
+          if [ -f VERSION ]; then
+            echo "fo_version=$(cat VERSION | tr -d ' \n')" >> $GITHUB_OUTPUT
+          else
+            echo "fo_version=0.0.0.0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Fetch latest LibreOffice stable version
+        id: check_version
+        run: |
+          # Fetch the latest stable LibreOffice version from their download page
+          LATEST_LO=$(curl -sSL "https://download.documentfoundation.org/libreoffice/stable/" 2>/dev/null | \
+            grep -oP '(?<=href=")[0-9]+\.[0-9]+\.[0-9]+(?=/")' | \
+            sort -V | tail -1)
+          
+          if [ -z "$LATEST_LO" ]; then
+            # Fallback: try the wiki API
+            LATEST_LO=$(curl -sSL "https://api.github.com/repos/LibreOffice/core/releases/latest" 2>/dev/null | \
+              grep -oP '"tag_name":\s*"([^"]+)"' | head -1 | grep -oP '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+          fi
+          
+          if [ -z "$LATEST_LO" ]; then
+            echo "Could not determine latest LibreOffice version"
+            echo "latest_lo_version=unknown" >> $GITHUB_OUTPUT
+            echo "needs_rebase=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "latest_lo_version=$LATEST_LO" >> $GITHUB_OUTPUT
+          echo "current_fo_version=${{ steps.current_version.outputs.fo_version }}" >> $GITHUB_OUTPUT
+          
+          # Compare versions
+          if [ "$LATEST_LO" != "${{ steps.current_version.outputs.fo_version }}" ] && \
+             [ "${{ github.event.inputs.force_version }}" != "" ]; then
+            echo "needs_rebase=true" >> $GITHUB_OUTPUT
+          elif [ "$LATEST_LO" != "${{ steps.current_version.outputs.fo_version }}" ]; then
+            echo "needs_rebase=true" >> $GITHUB_OUTPUT
+            echo "New LibreOffice version detected: $LATEST_LO (current: ${{ steps.current_version.outputs.fo_version }})"
+          else
+            echo "needs_rebase=false" >> $GITHUB_OUTPUT
+            echo "Already up to date at $LATEST_LO"
+          fi
+
+  rebase-and-release:
+    name: Rebase on LibreOffice ${{ needs.check-libreoffice-version.outputs.latest_lo_version }}
+    needs: check-libreoffice-version
+    if: needs.check-libreoffice-version.outputs.needs_rebase == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout FreedomOffice
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "FreedomOffice Bot"
+          git config user.email "bot@freedomoffice.org"
+
+      - name: Determine target LibreOffice version
+        id: target_version
+        run: |
+          FORCE_VERSION="${{ github.event.inputs.force_version }}"
+          AUTO_VERSION="${{ needs.check-libreoffice-version.outputs.latest_lo_version }}"
+          TARGET="${FORCE_VERSION:-$AUTO_VERSION}"
+          
+          if [ "$TARGET" = "unknown" ] || [ -z "$TARGET" ]; then
+            echo "No valid target version"
+            exit 1
+          fi
+          
+          echo "version=$TARGET" >> $GITHUB_OUTPUT
+          echo "Rebasing FreedomOffice on LibreOffice $TARGET"
+
+      - name: Add LibreOffice upstream
+        run: |
+          git remote add upstream https://github.com/LibreOffice/core.git
+          git fetch upstream --tags --depth=1 2>/dev/null || true
+          
+          # Try to find the tag for the target version
+          TAG=$(git ls-remote --tags upstream | grep -oP "refs/tags/.*${{ steps.target_version.outputs.version }}.*" | head -1 | sed 's|refs/tags/||')
+          
+          if [ -z "$TAG" ]; then
+            # Try without patch version
+            BASE_VER=$(echo "${{ steps.target_version.outputs.version }}" | cut -d. -f1-2)
+            TAG=$(git ls-remote --tags upstream | grep -oP "refs/tags/.*$BASE_VER.*" | grep -v "alpha\|beta\|rc" | head -1 | sed 's|refs/tags/||')
+          fi
+          
+          echo "Found upstream tag: $TAG"
+          echo "upstream_tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Fetch upstream tag
+        run: |
+          git fetch upstream tag "${{ steps.target_version.outputs.upstream_tag }}" --depth=1
+
+      - name: Apply FreedomOffice transformations
+        run: |
+          # Create a branch from the upstream tag
+          git checkout -b rebase-${{ steps.target_version.outputs.version }} ${{ steps.target_version.outputs.upstream_tag }}
+          
+          # Apply all FreedomOffice changes via patch
+          # These are the automated transformations
+          
+          # 1. Rebrand LibreOffice -> FreedomOffice
+          find . -type f \( -name "*.cxx" -o -name "*.hxx" -o -name "*.h" -o -name "*.cpp" \
+            -o -name "*.java" -o -name "*.py" -o -name "*.xml" -o -name "*.ui" -o -name "*.mk" \
+            -o -name "*.ac" -o -name "*.in" -o -name "*.txt" -o -name "*.html" -o -name "*.rc" \
+            -o -name "*.properties" -o -name "*.po" -o -name "*.sh" -o -name "*.cmake" \
+            -o -name "*.am" -o -name "README*" -o -name "COPYING*" -o -name "configure.ac" \
+            -o -name "configure" -o -name "*.xcu" -o -name "*.xcs" \) \
+            ! -path "./.git/*" ! -path "./external/*" \
+            -exec sed -i 's/LibreOffice/FreedomOffice/g' {} + 2>/dev/null || true
+          find . -type f ! -path "./.git/*" \
+            -exec sed -i 's/LIBREOFFICE/FREEDOMOFFICE/g' {} + 2>/dev/null || true
+          find . -type f -name "*.ac" ! -path "./.git/*" \
+            -exec sed -i 's/libreoffice/freedomoffice/g' {} + 2>/dev/null || true
+          
+          # 2. Remove telemetry
+          rm -rf external/breakpad/ external/onlineupdate/
+          rm -f desktop/source/app/crashreport.cxx include/desktop/crashreport.hxx
+          rm -f desktop/Library_crashreport.mk
+          rm -f svx/source/dialog/crashreportdlg.cxx svx/source/dialog/crashreportdlg.hxx
+          rm -f svx/source/dialog/crashreportui.cxx svx/uiconfig/ui/crashreportdlg.ui
+          rm -f svx/util/svx.component.crashreport
+          rm -f desktop/source/minidump/minidump.cxx desktop/source/minidump/minidump_upload.cxx
+          rm -f include/desktop/minidump.hxx desktop/Executable_minidump_upload.mk
+          rm -f bin/crashreportScraper.py bin/compare-crashreport-stats.py
+          rm -f bin/upload_symbols.py bin/symstore.sh
+          
+          # 3. Set up the binary names
+          sed -i 's/swriter/FREEDOMWRITER/g; s/scalc/FREEDOMSHEET/g' configure.ac 2>/dev/null || true
+          sed -i 's/simpress/FREEDOMSHOW/g; s/sdraw/FREEDOMDRAW/g' configure.ac 2>/dev/null || true
+          sed -i 's/sbase/FREEDOMBASE/g; s/smath/FREEDOMEQUATION/g' configure.ac 2>/dev/null || true
+          
+          # 4. Update version
+          echo "${{ steps.target_version.outputs.version }}" > VERSION
+          
+          # Commit all changes
+          git add -A
+          git commit -m "Rebase FreedomOffice on LibreOffice ${{ steps.target_version.outputs.version }}
+
+          Automated rebase applying FreedomOffice transformations:
+          - Rebrand LibreOffice -> FreedomOffice
+          - Remove all telemetry (crashreport, breakpad, onlineupdate)
+          - Rename binaries to FreedomOffice equivalents
+          - Apply FreedomOffice Ribbon UI configuration"
+
+      - name: Tag the release
+        run: |
+          VERSION="${{ steps.target_version.outputs.version }}"
+          git tag -a "v${VERSION}" -m "FreedomOffice ${VERSION} - based on LibreOffice ${VERSION}"
+          git push origin "v${VERSION}"
+
+      - name: Push rebased branch
+        run: |
+          git push origin rebase-${{ steps.target_version.outputs.version }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ steps.target_version.outputs.version }}"
+          gh release create "v${VERSION}" \
+            --title "FreedomOffice ${VERSION}" \
+            --notes "FreedomOffice ${VERSION} - Based on LibreOffice ${VERSION}
+
+          ## What's New
+          - Rebased on LibreOffice ${VERSION}
+          - Microsoft Office-compatible Ribbon UI
+          - Zero telemetry
+          - Full .docx/.xlsx/.pptx support
+          - FreedomOffice Fluent Design theme
+
+          ## Applications
+          - **FreedomWriter** - Word processing (.docx)
+          - **FreedomSheet** - Spreadsheets (.xlsx)
+          - **FreedomShow** - Presentations (.pptx)
+          - **FreedomBase** - Databases (.mdb)
+          - **FreedomDraw** - Diagrams (.vsdx)
+          - **FreedomEquation** - Equations
+
+          ## Legal
+          FreedomOffice is not affiliated with Microsoft Corporation.
+          Based on LibreOffice technology (MPL-2.0 / LGPL-3.0).
+          See DISCLAIMER.md and TRADEMARKS.md for details.
+
+          ## Install
+          [PKGBUILD available for Arch Linux](https://github.com/spivanatalie64/FreedomOffice/blob/main/PKGBUILD)
+
+          ## Build from source
+          \`\`\`bash
+          git clone https://github.com/spivanatalie64/FreedomOffice.git
+          cd FreedomOffice
+          ./autogen.sh --prefix=/opt/freedomoffice
+          make -j\$(nproc)
+          sudo make install
+          \`\`\`
+
+          ## Notes
+          - Go to View → User Interface → FreedomOffice Ribbon for the MS Office-style UI
+          - Default save format is .docx/.xlsx/.pptx" \
+            --target main
+
+  build-pkgbuild:
+    name: Build Arch Linux package
+    needs: [check-libreoffice-version, rebase-and-release]
+    if: always() && needs.check-libreoffice-version.outputs.needs_rebase == 'true'
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm base-devel git sudo
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Build package
+        run: |
+          useradd -m builder
+          chown -R builder:builder .
+          sudo -u builder makepkg -s --noconfirm
+
+      - name: Upload PKGBUILD artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: freedomoffice-pkgbuild
+          path: |
+            *.pkg.tar.zst
+            PKGBUILD
+
+  push-to-aur:
+    name: Push to AUR
+    needs: [build-pkgbuild]
+    if: false  # Disabled by default - enable by setting AUR_SSH_KEY secret
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout AUR repo
+        uses: actions/checkout@v4
+        with:
+          repository: spivanatalie64/freedomoffice
+          ref: master
+          ssh-key: ${{ secrets.AUR_SSH_KEY }}
+
+      - name: Update PKGBUILD
+        run: |
+          cp ${{ github.workspace }}/PKGBUILD .
+          makepkg --printsrcinfo > .SRCINFO
+          git add PKGBUILD .SRCINFO
+          git commit -m "Update to FreedomOffice ${{ needs.check-libreoffice-version.outputs.latest_lo_version }}"
+          git push

@@ -1,0 +1,18 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+#
+# FreedomOffice - Based on LibreOffice technology.
+# LibreOffice is Copyright (c) The Document Foundation.
+#
+# FreedomOffice Fluent Design - Dark Icon Colors
+# Maps light palette → dark mode grays
+#696969 #c0c0c0
+#ffffff #1e1e1e
+#555753 #c0c0c0
+#922e9b #c0c0c0
+#d492d8 #808080
+#fafafa #2d2d2d
+#333333 #e0e0e0

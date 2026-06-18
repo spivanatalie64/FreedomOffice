@@ -1,0 +1,19 @@
+<!--
+  Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+  Licensed under CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+  FreedomOffice - Based on LibreOffice technology.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1B73E8"/>
+      <stop offset="100%" style="stop-color:#0D3B6E"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+  <g transform="translate(128,128)">
+    <text text-anchor="middle" y="-30" font-family="Inter, Segoe UI, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">F</text>
+    <text text-anchor="middle" y="25" font-family="Inter, Segoe UI, sans-serif" font-size="14" fill="rgba(255,255,255,0.8)">FreedomOffice</text>
+    <text text-anchor="middle" y="50" font-family="Inter, Segoe UI, sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">Fluent Design Edition</text>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+<!--
+  Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+  Licensed under CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+  FreedomOffice - Based on LibreOffice technology.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <circle cx="6" cy="6" r="2.5" fill="none" stroke="#424242" stroke-width="1.8"/>
+  <circle cx="6" cy="18" r="2.5" fill="none" stroke="#424242" stroke-width="1.8"/>
+  <circle cx="18" cy="18" r="2.5" fill="none" stroke="#424242" stroke-width="1.8"/>
+  <line x1="8" y1="7.5" x2="16" y2="16.5" stroke="#424242" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="8" y1="16.5" x2="16" y2="7.5" stroke="#424242" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

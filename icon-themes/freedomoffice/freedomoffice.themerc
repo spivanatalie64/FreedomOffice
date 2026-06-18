@@ -1,0 +1,45 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+#
+# FreedomOffice - Based on LibreOffice technology.
+# LibreOffice is Copyright (c) The Document Foundation.
+#
+# FreedomOffice Fluent Design Icon Theme
+# =========================================
+# This is the Microsoft Office Fluent Design-inspired theme
+# for FreedomOffice - the free and open source office suite.
+#
+# Design by: spebdesigner (natalie's web design twin)
+# Built for: FreedomOffice - AcreetionOS Project
+# License:   CC0 1.0 Universal (icons), MPL-2.0 (configuration)
+#
+# Color Palette Reference:
+#   Window Chrome:    #185ABD (Title bar blue)
+#   Ribbon BG:        #F2F2F2
+#   Active Tab:       #185ABD
+#   Status Bar:       #0078D4
+#   Font Color:       #333333
+#   Button Hover:     #E1E1E1
+#   Button Press:     #C8C8C8
+#   Accents:          #D83B01 (orange), #107C10 (green), #5C2D91 (purple)
+#   Icon Default:     #424242
+#   Icon Disabled:    #A0A0A0
+#   Icon Active:      #1A73E8
+#
+# Icon Style: Fluent UI System Icons
+#   - 24x24 / 16x16 base sizes
+#   - Monoline (2px / 1.5px stroke)
+#   - Rounded caps and joins
+#   - No gradients, flat color
+#   - Neutral grays with accent on active
+#
+# Theme layers:
+#   freedomoffice → colibre_svg → colibre → breeze
+#
+# Application title bar colors:
+#   Writer:   #2B579A (Word blue)
+#   Calc:     #217346 (Excel green)
+#   Impress:  #D2422F (PowerPoint red)

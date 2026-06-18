@@ -1,0 +1,43 @@
+# Build artifacts
+autom4te.cache/
+config.log
+config.status
+config.host
+config.*.mk
+Makefile
+Makefile.*
+
+# Object files
+*.o
+*.lo
+*.la
+*.obj
+*.lib
+*.exp
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Build directories
+workdir/
+instdir/
+*/workdir/
+*/instdir/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large test data
+**/qa/cppunit/data/
+**/qa/unit/data/
+
+# External dependencies
+external/tarballs/
