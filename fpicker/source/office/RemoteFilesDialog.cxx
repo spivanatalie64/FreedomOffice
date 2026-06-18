@@ -205,12 +205,8 @@ static OUString lcl_GetServiceType( const ServicePtr& pService )
         {
             OUString sHost = pService->GetUrlObject().GetHost( INetURLObject::DecodeMechanism::WithCharset );
 
-            if( sHost.startsWith( GDRIVE_BASE_URL ) )
-                return u"Google Drive"_ustr;
-            else if( sHost.startsWith( ALFRESCO_CLOUD_BASE_URL ) )
+            if( sHost.startsWith( ALFRESCO_CLOUD_BASE_URL ) )
                 return u"Alfresco Cloud"_ustr;
-            else if( sHost.startsWith( ONEDRIVE_BASE_URL ) )
-                return u"OneDrive"_ustr;
 
             return u"CMIS"_ustr;
         }

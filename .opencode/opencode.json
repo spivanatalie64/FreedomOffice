@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "FreedomAI",
+  "agent": {
+    "FreedomAI": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "mode": "all",
+      "description": "FreedomOffice's built-in AI assistant",
+      "permission": {
+        "edit": "allow",
+        "bash": "ask",
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow"
+      }
+    }
+  },
+  "skills": {
+    "paths": [".opencode/skill"]
+  }
+}

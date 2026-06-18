@@ -45,6 +45,30 @@
 #define ONEDRIVE_REDIRECT_URI "http://localhost/FreedomOffice"
 #define ONEDRIVE_SCOPE "Files.ReadWrite offline_access"
 
+
+/* Nextcloud */
+// Nextcloud supports OAuth2 for WebDAV/CMIS access.
+// Set your client ID and secret from your Nextcloud admin settings:
+//   Settings -> Security -> OAuth 2.0 clients
+#define NEXTCLOUD_BASE_URL "https://<your-nextcloud-server>/remote.php/dav/"
+#define NEXTCLOUD_CLIENT_ID ""
+#define NEXTCLOUD_CLIENT_SECRET ""
+#define NEXTCLOUD_AUTH_URL "https://<your-nextcloud-server>/apps/oauth2/authorize"
+#define NEXTCLOUD_TOKEN_URL "https://<your-nextcloud-server>/apps/oauth2/api/v1/token"
+#define NEXTCLOUD_REDIRECT_URI OAUTH2_REDIRECT_URI_PREFIX "NEXTCLOUD/"
+#define NEXTCLOUD_SCOPE "files"
+
+
+/* ownCloud */
+#define OWNCLOUD_BASE_URL "https://<your-owncloud-server>/remote.php/dav/"
+#define OWNCLOUD_CLIENT_ID ""
+#define OWNCLOUD_CLIENT_SECRET ""
+#define OWNCLOUD_AUTH_URL "https://<your-owncloud-server>/apps/oauth2/authorize"
+#define OWNCLOUD_TOKEN_URL "https://<your-owncloud-server>/apps/oauth2/api/v1/token"
+#define OWNCLOUD_REDIRECT_URI OAUTH2_REDIRECT_URI_PREFIX "OWNCLOUD/"
+#define OWNCLOUD_SCOPE "files"
+
+
 #if defined _WIN32
 #define OAUTH2REQUEST_SUPPORTED
 #endif

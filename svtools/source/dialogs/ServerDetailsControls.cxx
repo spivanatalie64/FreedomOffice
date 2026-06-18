@@ -300,9 +300,7 @@ void CmisDetailsContainer::set_visible( bool bShow )
 
     m_pDialog->m_xEDHost->set_text( m_sBinding );
 
-    if( ( m_sBinding == GDRIVE_BASE_URL )
-            || m_sBinding.startsWith( ALFRESCO_CLOUD_BASE_URL )
-            || ( m_sBinding == ONEDRIVE_BASE_URL ) )
+    if( m_sBinding.startsWith( ALFRESCO_CLOUD_BASE_URL ) )
     {
         m_pDialog->m_xFTHost->hide();
         m_pDialog->m_xHostBox->hide();
@@ -310,13 +308,6 @@ void CmisDetailsContainer::set_visible( bool bShow )
         m_pDialog->m_xRepositoryBox->hide();
         m_pDialog->m_xEDRoot->hide();
         m_pDialog->m_xFTRoot->hide();
-#if defined OAUTH2REQUEST_SUPPORTED
-        if (m_sBinding == GDRIVE_BASE_URL || m_sBinding == ONEDRIVE_BASE_URL)
-        {
-            m_pDialog->m_xFTShare->hide();
-            m_pDialog->m_xEDShare->hide();
-        }
-#endif
     }
     else
     {
@@ -335,10 +326,7 @@ void CmisDetailsContainer::set_visible( bool bShow )
 
 bool CmisDetailsContainer::enablePassword()
 {
-#if defined OAUTH2REQUEST_SUPPORTED
-    if (m_sBinding == GDRIVE_BASE_URL || m_sBinding == ONEDRIVE_BASE_URL)
-        return false;
-#endif
+    // Password is handled via OAuth2 if available, or via server auth
     return DetailsContainer::enablePassword();
 }
 
@@ -348,9 +336,7 @@ INetURLObject CmisDetailsContainer::getUrl( )
     OUString sPath = m_pDialog->m_xEDRoot->get_text().trim();
 
     bool bSkip = true;
-    if( ( m_sBinding == GDRIVE_BASE_URL )
-            || m_sBinding.startsWith( ALFRESCO_CLOUD_BASE_URL )
-            || ( m_sBinding == ONEDRIVE_BASE_URL ) )
+    if( m_sBinding.startsWith( ALFRESCO_CLOUD_BASE_URL ) )
     {
         bSkip = m_sUsername.isEmpty();
     }

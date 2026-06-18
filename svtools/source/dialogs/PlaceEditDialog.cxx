@@ -181,12 +181,10 @@ void PlaceEditDialog::InitDetails( )
     // Create CMIS controls for each server type
 
     // Load the ServerType entries
-    bool bSkipGDrive = std::string_view( GDRIVE_CLIENT_ID ).empty() ||
-                       std::string_view( GDRIVE_CLIENT_SECRET ).empty();
+    // Google Drive and OneDrive are not supported in FreedomOffice (proprietary services removed)
+    // Use Nextcloud or ownCloud via WebDAV instead.
     bool bSkipAlfresco = std::string_view( ALFRESCO_CLOUD_CLIENT_ID ).empty() ||
                        std::string_view( ALFRESCO_CLOUD_CLIENT_SECRET ).empty();
-    bool bSkipOneDrive= std::string_view( ONEDRIVE_CLIENT_ID ).empty() ||
-                       std::string_view( ONEDRIVE_CLIENT_SECRET ).empty();
 
     Sequence< OUString > aTypesUrlsList( officecfg::Office::Common::Misc::CmisServersUrls::get() );
     Sequence< OUString > aTypesNamesList( officecfg::Office::Common::Misc::CmisServersNames::get() );
@@ -197,9 +195,7 @@ void PlaceEditDialog::InitDetails( )
     {
         OUString sUrl = aTypesUrlsList[i].replaceFirst("<host", Concat2View("<" + SvtResId(STR_SVT_HOST))).replaceFirst("port>",  Concat2View(SvtResId(STR_SVT_PORT) + ">"));
 
-        if ((sUrl == GDRIVE_BASE_URL && bSkipGDrive) ||
-            (sUrl.startsWith( ALFRESCO_CLOUD_BASE_URL) && bSkipAlfresco) ||
-            (sUrl == ONEDRIVE_BASE_URL && bSkipOneDrive))
+        if (sUrl.startsWith( ALFRESCO_CLOUD_BASE_URL) && bSkipAlfresco)
         {
             // this service is not supported
             continue;
@@ -251,9 +247,7 @@ IMPL_LINK( PlaceEditDialog, OKHdl, weld::Button&, /*rBtn*/, void)
 
     OUString sUrl = m_xCurrentDetails->getUrl().GetHost( INetURLObject::DecodeMechanism::WithCharset );
 
-    if ( sUrl.startsWith( GDRIVE_BASE_URL )
-       || sUrl.startsWith( ALFRESCO_CLOUD_BASE_URL )
-       || sUrl.startsWith( ONEDRIVE_BASE_URL ) )
+    if ( sUrl.startsWith( ALFRESCO_CLOUD_BASE_URL ) )
     {
         m_xBTRepoRefresh->clicked();
 
