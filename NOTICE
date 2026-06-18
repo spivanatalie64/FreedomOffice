@@ -1,0 +1,72 @@
+# FreedomOffice Notice
+
+Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+https://acreetionos.org
+
+## Based on LibreOffice
+
+FreedomOffice is a fork of LibreOffice. LibreOffice is Copyright (c)
+The Document Foundation and is used under the terms of the Mozilla Public
+License v2.0 and GNU Lesser General Public License v3.0.
+
+LibreOffice website: https://www.libreoffice.org/
+The Document Foundation: https://www.documentfoundation.org/
+
+## Upstream Contributors
+
+This product includes software originally developed by:
+
+### Apache OpenOffice
+Copyright 2011, 2014 The Apache Software Foundation
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+OpenOffice website: http://www.openoffice.org
+
+### Oracle
+Portions of this software copyright (c) 2000-2011,
+Oracle and/or its affiliates (http://www.oracle.com/).
+
+### IBM
+Portions of this software (C) Copyright IBM Corporation 2003, 2012.
+All Rights Reserved.
+
+### Individual Contributors
+Thousands of individual developers have contributed to LibreOffice and its
+predecessor projects. For a full list of contributors, see:
+https://www.libreoffice.org/about-us/credits/
+
+## Third-Party Components
+
+FreedomOffice includes code from the following projects:
+
+- **Apache Lucene** - Copyright 2006 The Apache Software Foundation
+- **redland** - Redland software (http://librdf.org/)
+- **Apache BeanShell Scripting for Java** - Copyright 1997-2012 Patrick Niemeyer
+- **OpenSSL** - This product includes software developed by the OpenSSL Project
+  for use in the OpenSSL Toolkit (http://www.openssl.org/)
+
+## Icon Theme
+
+The FreedomOffice Fluent Icon Theme is based on the Colibre Icon Theme:
+
+- Colibre Icon Theme Copyright (C) 2018 Andreas Kainz <kainz.a@gmail.com>
+- Colibre Icon Theme Copyright (c) 2020-2022 Rizal Muttaqin <riz_17_oke@yahoo.co.id>
+
+FreedomOffice Fluent modifications and additions:
+- Copyright (c) 2026 Natalie Spiva - AcreetionOS Project
+- Design by spebdesigner
+
+Licensed under Creative Commons CC0 1.0 Universal.
+
+## Trademarks
+
+"FreedomOffice" and the FreedomOffice logo are trademarks of
+Natalie Spiva / AcreetionOS Project.
+
+"Microsoft Office", "Word", "Excel", "PowerPoint", "Outlook", "Access",
+"Visio", and the Office logo are trademarks or registered trademarks of
+Microsoft Corporation in the United States and/or other countries.
+
+"LibreOffice" is a registered trademark of The Document Foundation.
+
+All other trademarks are the property of their respective owners.

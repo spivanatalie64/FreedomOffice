@@ -1,0 +1,92 @@
+# FreedomOffice License Information
+
+FreedomOffice is a fork of LibreOffice and is made available under the same
+licensing terms as LibreOffice. Specifically, FreedomOffice is licensed under
+a combination of the following licenses:
+
+## Primary Licenses
+
+### Mozilla Public License Version 2.0 (MPL-2.0)
+
+Most source files in FreedomOffice are licensed under the Mozilla Public
+License v2.0. A copy of the MPL-2.0 can be found in:
+
+    freedomoffice-core/COPYING.MPL
+
+The MPL-2.0 is a file-level copyleft license that allows the covered code to
+be used in proprietary projects as long as the MPL-covered files remain under
+the MPL. For full terms, see:
+
+    https://mozilla.org/MPL/2.0/
+
+### GNU Lesser General Public License Version 3.0 (LGPL-3.0)
+
+Some libraries and components of FreedomOffice are licensed under the GNU
+Lesser General Public License v3.0. A copy of the LGPL-3.0 can be found in:
+
+    freedomoffice-core/COPYING.LGPL
+
+The LGPL-3.0 allows the covered library to be linked into proprietary
+applications. For full terms, see:
+
+    https://www.gnu.org/licenses/lgpl-3.0.html
+
+### GNU General Public License Version 3.0 (GPL-3.0)
+
+Some components of FreedomOffice are licensed under the GNU General Public
+License v3.0. A copy of the GPL-3.0 can be found in:
+
+    freedomoffice-core/COPYING
+
+For full terms, see:
+
+    https://www.gnu.org/licenses/gpl-3.0.html
+
+## Icon Theme License
+
+The FreedomOffice Fluent Icon Theme (located in `freedomoffice-core/icon-themes/freedomoffice/`)
+is based on the Colibre Icon Theme and is licensed under Creative Commons
+CC0 1.0 Universal. See `freedomoffice-core/icon-themes/freedomoffice/COPYING-ICONS`
+for details.
+
+## Dual Licensing
+
+As with LibreOffice, FreedomOffice components are generally available to you
+under the MPL-2.0, with the option to distribute under the LGPL-3.0 or GPL-3.0
+where applicable. Individual source files should contain license headers
+indicating which license applies.
+
+## How to Apply These Licenses
+
+When creating new files for FreedomOffice, please add the appropriate MPL-2.0
+license header to the top of each file. The standard header for new files is:
+
+```
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+```
+
+## Copyright
+
+FreedomOffice is Copyright (c) 2026 Natalie Spiva - AcreetionOS Project.
+
+LibreOffice is Copyright (c) The Document Foundation.
+Portions of the codebase include work from Apache OpenOffice, Oracle,
+IBM, and many individual contributors. See the NOTICE file for full
+attribution.
+
+## Source Code
+
+The complete source code for FreedomOffice is available at:
+https://github.com/nataliespiva/FreedomOffice
+
+FreedomOffice is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+FreedomOffice is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
