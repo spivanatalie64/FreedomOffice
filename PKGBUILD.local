@@ -1,0 +1,58 @@
+# Arch Linux PKGBUILD for freedomoffice-bin / freedomoffice
+# Build package using makepkg or devtools:
+#   makepkg -si
+
+pkgname=freedomoffice
+pkgver=27.2.0
+pkgrel=1
+pkgdesc="Microsoft Office visual & workflow clone backed by complete LibreOffice engine compatibility, AcreetionOS dark theme, and 100% local FreedomAI."
+arch=('x86_64')
+url="https://acreetionos.org"
+license=('MPL-2.0' 'LGPL-3.0-or-later')
+depends=(
+    'cairo'
+    'curl'
+    'dbus'
+    'fontconfig'
+    'freetype2'
+    'glib2'
+    'gpgme'
+    'gtk3'
+    'libepoxy'
+    'libpng'
+    'libx11'
+    'nss'
+    'python'
+    'zlib'
+)
+optdepends=(
+    'docker: for built-in SearXNG search engine container and optional Tor search plugin'
+    'ollama: for 100% local FreedomAI assistant'
+    'thunderbird: for mail, calendar, and task management'
+    'element-desktop: for real-time team chat collaboration'
+    'nextcloud-client: for local cloud storage synchronization'
+)
+source=()
+sha256sums=()
+
+build() {
+    cd "${srcdir}/.."
+    ./autogen.sh \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --with-vendor="AcreetionOS" \
+        --without-java \
+        --disable-report-builder \
+        --enable-gtk3
+    make
+}
+
+package() {
+    cd "${srcdir}/.."
+    make DESTDIR="${pkgdir}" install
+
+    # Install custom launcher scripts and MCP server
+    install -Dm755 bin/freedomoffice-searxng.sh "${pkgdir}/usr/bin/freedomoffice-searxng"
+    install -Dm755 bin/freedomoffice-tor.sh "${pkgdir}/usr/bin/freedomoffice-tor"
+    install -Dm755 .opencode/mcp_freedom_search.py "${pkgdir}/usr/lib/freedomoffice/mcp_freedom_search.py"
+}

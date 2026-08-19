@@ -16,6 +16,7 @@ FreedomWriter inherits the full word processing engine from LibreOffice Writer. 
 
 | MS Word Feature | Status | FreedomOffice Equivalent |
 |----------------|--------|------------------------|
+| **PDF Editing** | ✅ Available | File → Open → Select .pdf. PDF documents open natively for full vector text editing, form field filling, annotation, object manipulation, and hybrid PDF/ODF export in **FreedomWriter** and **FreedomDraw**. |
 | **Track Changes / Review** | ✅ Available | Tools → Track Changes. Full redlining, accept/reject, comments in margins. Compatible with .docx tracked changes. |
 | **Comments** | ✅ Available | Insert → Comment (Ctrl+Alt+C). Sidebar comments with reply threading. Round-trips with .docx. |
 | **Mail Merge** | ✅ Available | Tools → Mail Merge Wizard. Supports data sources from spreadsheets, databases, and address books. |
@@ -143,6 +144,26 @@ FreedomEquation inherits the full Math engine from LibreOffice.
 
 ---
 
+## Full Microsoft 365 App & Service Mapping
+
+| MS 365 Application / Service | FreedomOffice & FOSS Equivalent | Integration / Implementation Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Microsoft Word** | **FreedomWriter** | Full word processor with paragraph/character styles, track changes, templates, and Copilot-assisted drafting (`@FreedomAI`). | ✅ Native |
+| **Microsoft Excel** | **FreedomSheet** | Spreadsheets, formulas, dynamic arrays, chart engines, PivotTables, Base ETL/Power Query, and data modeling. | ✅ Native |
+| **Microsoft PowerPoint** | **FreedomShow** | Slide creation with transitions, animations, embedded media, presenter view, and FreedomAI design assistance. | ✅ Native |
+| **Microsoft Access** | **FreedomBase** | Relational database builder with table designer, SQL query builder, forms, reports, and ODBC/JDBC connectivity. | ✅ Native |
+| **Microsoft Publisher** | **FreedomDraw** | Desktop publishing, page layout design, vector illustration, stencils, brochures, and export to PDF/EPS/SVG. | ✅ Native |
+| **Microsoft Outlook** | **Thunderbird + FreedomOffice Companion** | Email, calendar, contacts, tasks, and meeting management with mail merge integration. | ⚙️ FOSS Suite |
+| **Microsoft OneNote** | **Joplin / Nextcloud Notes** | Digital notebooks with rich text, markdown sync, drawing, audio attachments, and note linkage. | ⚙️ FOSS Suite |
+| **Microsoft OneDrive** | **Nextcloud WebDAV** | Cloud storage per user, cross-device file synchronization, automatic locking, and remote places support. | ✅ Integrated |
+| **Microsoft Teams** | **Element / Matrix** | Real-time chat, channels, video calls via Jitsi, and document link collaboration. | ⚙️ FOSS Suite |
+| **Microsoft SharePoint** | **Nextcloud / Collabora** | Shared document libraries, intranet team sites, and web co-authoring. | ⚙️ FOSS Suite |
+| **Microsoft Planner** | **OpenProject / Vikunja / WeKan** | Lightweight task boards, kanban, project milestones, and document attachment links. | ⚙️ FOSS Suite |
+| **Microsoft Forms** | **Nextcloud Forms / LimeSurvey** | Surveys, quizzes, feedback forms, and automatic result export to FreedomSheet. | ⚙️ FOSS Suite |
+| **Microsoft Loop** | **Nextcloud Collective / HedgeDoc** | Real-time co-creation workspaces, live markdown pads, and block-based collaboration. | ⚙️ FOSS Suite |
+
+---
+
 ## Services & Cloud Integration
 
 | MS Service | FOSS Alternative | Integration Method | Status |
@@ -163,24 +184,100 @@ FreedomEquation inherits the full Math engine from LibreOffice.
 
 ---
 
-## AI Features (Copilot Replacement)
+## AI Features (100% Local FreedomAI ↔ Microsoft Copilot Replacement)
 
-FreedomOffice does not have a built-in Copilot. Instead, it integrates with **opencode AI** — the same AI agent writing this document — and other FOSS AI tools to provide equivalent capabilities.
+> [!IMPORTANT]
+> **NO Microsoft Copilot, NO Cloud Telemetry, NO Subscriptions.**
+> FreedomOffice replaces proprietary Microsoft Copilot with **FreedomAI** — a 100% local, private Ollama-hosted LLM (`ollama/llama3.2`) integrated across FreedomWriter, FreedomSheet, FreedomShow, Thunderbird, Element, and Joplin/Notes. Zero telemetry, zero cloud calls, complete data privacy.
 
-| MS Copilot Feature | FreedomOffice Implementation | Details |
-|-------------------|----------------------------|---------|
-| **Chat with AI** | **opencode AI integration** | Invoke opencode AI directly from FreedomOffice. Ask questions, get answers, generate content. The AI has full context of your document. |
-| **Draft a document** | **opencode custom prompt** | "Draft a business letter about [topic]." opencode AI generates the content inline or in a new document. |
-| **Summarize document** | **opencode AI with context** | "Summarize this document in 3 paragraphs." The AI reads the current document and produces a summary. |
-| **Analyze spreadsheet** | **opencode AI + Python** | "Analyze this data and tell me trends." opencode AI writes and executes Python analysis on FreedomSheet data using pandas/numpy. Results returned as text or charts. |
-| **Create presentation** | **opencode AI + script** | "Create a 10-slide presentation about [topic]." opencode AI generates slide content, applies themes, and assembles the presentation via the Universal Network Objects (UNO) API. |
-| **Generate images** | **opencode + Stable Diffusion** | "Generate an image of [description]." opencode calls a local Stable Diffusion instance (Automatic1111 / ComfyUI) and inserts the result into the document. |
-| **Translate** | **LibreTranslate API** | "Translate this paragraph to Spanish." opencode AI sends text to a local LibreTranslate server and replaces/inserts the translation. |
-| **Dictation** | **Whisper.cpp** | Speak → Whisper.cpp transcribes → text appears in document. Offline, private, no data leaves the machine. |
-| **Read Aloud** | **Festival / eSpeak** | Text-to-speech using Festival (high-quality) or eSpeak (lightweight). Select text → hear it read aloud. |
-| **Document Q&A** | **opencode AI + RAG** | "What does the contract say about termination?" opencode AI reads your documents and answers questions with citations. Retrieval-Augmented Generation over your local document store. |
-| **Smart Compose** | **opencode AI autocomplete** | Start typing → opencode AI suggests completions. Context-aware sentence and paragraph completion. |
-| **Data Pattern Detection** | **opencode AI + pandas** | "Find anomalies in this dataset." The AI analyzes data with Python and highlights cells, creates PivotTables, or writes a summary. |
+| MS Copilot Feature | FreedomAI Local Implementation | FreedomOffice Capabilities & Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Draft & Rewrite Text (Word)** | **FreedomAI Assistant in FreedomWriter** | Select text or invoke `@FreedomAI` to draft document sections, rephrase tone, rewrite paragraphs, and fix grammar locally. | ✅ Local |
+| **Summarize Long Content (Word)** | **FreedomAI Context Summarizer** | Instantly summarize multi-page text documents, contracts, or reports into bullet points or executive summaries without sending data to external servers. | ✅ Local |
+| **Analyze Spreadsheets & Formulas (Excel)** | **FreedomAI Data Analyst in FreedomSheet** | Query tabular data in plain English. FreedomAI generates complex formulas (`XLOOKUP`, `SUMIFS`), writes Python/Basic macros, detects data trends, and builds PivotTables. | ✅ Local |
+| **Create Slide Layouts & Visuals (PowerPoint)** | **FreedomAI Designer in FreedomShow** | Generate slide topic outlines, modern slide structures, content cards, and presentation decks via local UNO API automation. | ✅ Local |
+| **Summarize Threads & Propose Replies (Outlook)** | **FreedomAI + Thunderbird Extension** | Summarize long email chains, extract action items, and generate draft email responses inside Thunderbird via local Ollama. | ⚙️ Local Plugin |
+| **Meeting Recaps & Action Items (Teams)** | **FreedomAI + Element / Matrix Bot** | Extract meeting recaps, decision summaries, and assigned tasks from Element/Matrix chat logs offline. | ⚙️ Local Plugin |
+| **Notebook Organization & Q&A (OneNote)** | **FreedomAI + Joplin RAG** | Retrieval-Augmented Generation (RAG) over local Joplin/Notes notebooks for instant Q&A, citation retrieval, and note tagging. | ⚙️ Local Plugin |
+| **Local Image Generation** | **FreedomAI + Stable Diffusion (ComfyUI)** | Generate visual assets and diagrams locally via ComfyUI / Automatic1111 REST API and insert into documents. | ⚙️ Local Plugin |
+| **Voice Dictation** | **Whisper.cpp** | Local, offline speech-to-text dictation directly piping text into FreedomWriter documents. | ✅ Local |
+
+---
+
+## 🔐 Security, Hardening & Compliance Features (Linux Hardened vs MS Defender/Intune/AIP)
+
+> [!NOTE]
+> **Enterprise Linux Security over Proprietary DRM.**
+> Instead of proprietary cloud locks (Microsoft Defender, Intune MDM, Rights Management), FreedomOffice uses battle-tested Linux security infrastructure: **GPG/OpenPGP hardware signing**, **AppArmor/SELinux mandatory access control**, **LUKS file-at-rest encryption**, **ClamAV e-mail filtering**, and **Ansible/SaltStack enterprise fleet management**.
+
+| MS Security Feature | Linux Hardened Equivalent | FreedomOffice Implementation & Security Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Microsoft Defender (Email/Device)** | **ClamAV + Rspamd + AppArmor** | Automated email attachment scanning (ClamAV), anti-phishing (Rspamd in Thunderbird), and strict kernel sandbox profiles (`apparmor/freedomoffice`). | ✅ Native |
+| **Microsoft Intune (MDM / Fleet)** | **Ansible / SaltStack / Puppet** | Declarative configuration management, policy enforcement, fleet deployment, and remote lock/wipe scripts across enterprise workstations. | ⚙️ FOSS Enterprise |
+| **Information Protection (DLP / DRM)** | **GPG Digital Signatures & LUKS** | OpenPGP document signing, GPG encryption (File → Sign Document), document watermark classification, and full disk/file-level LUKS encryption. | ✅ Native |
+| **Data Loss Prevention (DLP)** | **AppArmor Profile + Firejail** | Restricts network outbound sockets for document processes, preventing unauthorized exfiltration of sensitive document data. | ✅ Native |
+| **Compliance & Audit Logging** | **Linux Auditd + Systemd Journal** | Full compliance event logging (`auditd`), tracking file access, macro execution, and signature verifications. | ✅ Native |
+
+---
+
+## 🧮 Ultra-Advanced Spreadsheets & Formula Engine (FreedomSheet ↔ Excel Deep Parity)
+
+| Advanced Excel Feature | FreedomSheet & FOSS Equivalent | Technical Implementation Details | Status |
+| :--- | :--- | :--- | :--- |
+| **`LET` & `LAMBDA` Functions** | **Named Expressions & Python UDFs** | Replicated via Calc Named Expressions and Python User-Defined Functions (`ScriptForge` module). | ✅ Native |
+| **Dynamic Arrays (`FILTER`, `UNIQUE`, `SORT`)** | **`ARRAY()` & Formula Auto-Expansion** | Dynamic array formula auto-expansion and array functions (`FILTER`, `UNIQUE`, `SORT`, `SEQUENCE`). | ✅ Native |
+| **Power Pivot & Data Model** | **Base Relational Engine + PivotTable** | Multi-table relational data model linked via **FreedomBase** engine; DAX queries mapped to standard SQL. | ✅ Native |
+| **Power Query (ETL Engine)** | **Base Data Source & Python Pandas** | Connect to databases, Web APIs, CSV, and JSON via LibreOffice Base query wizard or Python Pandas script pipeline. | ✅ Native |
+| **Solver & Optimization** | **Linear & Non-Linear Solver** | `Tools → Solver` supporting Evolutionary, Swarm, and Simplex optimization algorithms. | ✅ Native |
+| **Analysis ToolPak** | **Data Statistics Suite** | `Data → Statistics` (ANOVA, Regression, Histograms, F-Test, t-Test, Moving Average, Exponential Smoothing). | ✅ Native |
+| **Watch Window & Formula Auditing** | **Formula Inspector & Trace Precedents** | `Tools → Detective → Trace Precedents/Dependents` and cell watch window docking. | ✅ Native |
+| **Camera Tool & Live Snapshots** | **Live Vector OLE Range Linking** | Copy range → `Edit → Paste Special → Link / GDI Metafile` for real-time live cell snapshots. | ✅ Native |
+
+---
+
+## 📝 Advanced Word Processing & Publishing (FreedomWriter & FreedomDraw)
+
+| MS Feature | FreedomOffice Implementation | Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Document Compare & Merge** | **`Edit → Track Changes → Compare / Merge`** | Side-by-side visual document comparison and multi-reviewer tracked change merging. | ✅ Native |
+| **Master Documents** | **`File → New → Master Document (.odm)`** | Organize complex multi-chapter books, manuals, and reports into a sub-document structure. | ✅ Native |
+| **Building Blocks & AutoText** | **`Tools → AutoText (Ctrl+F3)`** | Reusable document blocks, boilerplate text, signature blocks, and quick-insert shortcuts. | ✅ Native |
+| **Content Controls & Form Fields** | **`View → Toolbars → Form Controls`** | Text boxes, dropdown lists, check boxes, date pickers, and option buttons for interactive forms. | ✅ Native |
+| **Outline View** | **`View → Navigator (F5) / Outline Mode`** | Collapse, expand, and drag-and-drop document sections by heading levels. | ✅ Native |
+
+---
+
+## 🎛️ Advanced Presentations (FreedomShow ↔ PowerPoint)
+
+| MS Feature | FreedomOffice Implementation | Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Morph Transition** | **Cross-Fade & Property Interpolation** | Slide transition cross-fading and object property animation sequences. | ✅ Native |
+| **Slide Zoom & Navigation Hubs** | **Interaction Links (`Slide → Interaction`)** | Clickable thumbnail hotspots linking dynamically between presentation sections. | ✅ Native |
+| **Cameo (Live Camera Feed)** | **GStreamer Live Video Capture** | `Insert → Media → Audio or Video` (live webcam capture device input stream). | ✅ Native |
+| **Rehearse Timings & Video Export** | **`Slide Show → Rehearse Timings`** | Auto-record slide timings and export full presentations as `.mp4` / `.webm` video. | ✅ Native |
+| **Custom Shows & Animation Painter** | **`Slide Show → Custom Slide Show`** | Define targeted presentation paths and copy object animations via Animation panel. | ✅ Native |
+
+---
+
+## 📧 Advanced Mail & Collaboration (Thunderbird & Element Suite)
+
+| MS Feature | FOSS Suite Equivalent | Technical Implementation Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Focused Inbox & Conversation View** | **Thunderbird Threading & Smart Views** | Intelligent message grouping, threaded conversation view, and message filters. | ⚙️ FOSS Suite |
+| **Quick Steps & Rules** | **Thunderbird Filters & Quick Actions** | Multi-action automated message routing, tagging, forwarding, and folder archiving. | ⚙️ FOSS Suite |
+| **Scheduling Polls & Voting** | **Nextcloud Polls / Thunderbird Event** | Integrated meeting time voting polls and interactive event RSVPs. | ⚙️ FOSS Suite |
+| **Delegate Access & Shared Mailboxes** | **IMAP Shared Folders & CalDAV** | Shared calendar management and delegated mailbox access. | ⚙️ FOSS Suite |
+
+---
+
+## 🗂️ Enterprise Data & Power Platform (Nextcloud, OpenProject, Superset)
+
+| Power Platform / Admin Feature | FOSS Enterprise Equivalent | Architecture & Technical Implementation | Status |
+| :--- | :--- | :--- | :--- |
+| **Power BI Desktop** | **Apache Superset / Metabase** | Interactive dashboard creation, SQL data sources, and web data visualizations. | ⚙️ FOSS Suite |
+| **Power Automate (RPA)** | **n8n / Node-RED / Robot Framework** | Workflow automation, webhook triggers, and desktop GUI robotic process automation. | ⚙️ FOSS Suite |
+| **Power Apps / Dataverse** | **Appsmith / Budibase / PostgreSQL** | Low-code internal application builder connected to relational databases. | ⚙️ FOSS Suite |
+| **Admin Center & Audit Logs** | **Nextcloud Admin & Linux Auditd** | Fleet user management, OAuth2 identity, license enforcement, and `auditd` logs. | ⚙️ Enterprise |
 
 ---
 

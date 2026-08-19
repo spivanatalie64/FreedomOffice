@@ -3,9 +3,9 @@
   "default_agent": "FreedomAI",
   "agent": {
     "FreedomAI": {
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "ollama/llama3.2",
       "mode": "all",
-      "description": "FreedomOffice's built-in AI assistant",
+      "description": "FreedomOffice's built-in AI assistant (100% local Ollama inference)",
       "permission": {
         "edit": "allow",
         "bash": "ask",
@@ -17,5 +17,11 @@
   },
   "skills": {
     "paths": [".opencode/skill"]
+  },
+  "mcpServers": {
+    "freedom-search": {
+      "command": "python3",
+      "args": [".opencode/mcp_freedom_search.py"]
+    }
   }
 }

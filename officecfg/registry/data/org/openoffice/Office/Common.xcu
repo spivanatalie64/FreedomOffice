@@ -30,6 +30,35 @@
         <value install:module="wnt">true</value>
       </prop>
     </node>
+    <node oor:name="Appearance">
+      <prop oor:name="ApplicationColorScheme" oor:type="xs:string">
+        <value>AcreetionOS-Dark</value>
+      </prop>
+      <prop oor:name="PrimaryAccentColor" oor:type="xs:string">
+        <value>#2ECC71</value>
+      </prop>
+      <prop oor:name="BodyBackgroundColor" oor:type="xs:string">
+        <value>#121212</value>
+      </prop>
+      <prop oor:name="PanelBackgroundColor" oor:type="xs:string">
+        <value>#1A1A1A</value>
+      </prop>
+      <prop oor:name="BoxBackgroundColor" oor:type="xs:string">
+        <value>#222222</value>
+      </prop>
+      <prop oor:name="BoxBorderColor" oor:type="xs:string">
+        <value>#333333</value>
+      </prop>
+      <prop oor:name="TextBrightColor" oor:type="xs:string">
+        <value>#E5E5E5</value>
+      </prop>
+      <prop oor:name="FontFamilySans" oor:type="xs:string">
+        <value>Cantarell, Segoe UI, Roboto, Noto Sans, sans-serif</value>
+      </prop>
+      <prop oor:name="FontFamilyMono" oor:type="xs:string">
+        <value>Cascadia Code, Fira Code, JetBrains Mono, Source Code Pro, monospace</value>
+      </prop>
+    </node>
   </node>
   <node oor:name="Help">
     <node oor:name="StartCenter">
@@ -430,6 +459,10 @@
         <it>https://&lt;yourserver&gt;/remote.php/dav/files/&lt;username&gt;/</it>
         <it>https://&lt;yourserver&gt;/remote.php/webdav/</it>
         <it></it>
+        <it>https://www.googleapis.com/drive/v3/</it>
+        <it>https://graph.microsoft.com/v1.0/me/drive/</it>
+        <it>https://s3.amazonaws.com/</it>
+        <it>https://pdf-services.adobe.io/</it>
       </value>
     </prop>
     <prop oor:name="CmisServersNames">
@@ -444,6 +477,10 @@
         <it>Nextcloud (WebDAV)</it>
         <it>ownCloud (WebDAV)</it>
         <it>--------------------</it>
+        <it>Google Drive</it>
+        <it>Microsoft OneDrive</it>
+        <it>Amazon S3 Storage</it>
+        <it>Adobe Document Cloud</it>
       </value>
     </prop>
     <prop oor:name="FindReplaceRememberedSearches">
@@ -516,6 +553,65 @@
       <prop oor:name="EnableBaseInstallation" oor:type="xs:boolean">
         <value install:module="unx">true</value>
       </prop>
+  </node>
+  <node oor:name="FreedomAI">
+    <prop oor:name="EnableLocalAI" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+    <prop oor:name="Provider" oor:type="xs:string">
+      <value>Ollama</value>
+    </prop>
+    <prop oor:name="OllamaEndpoint" oor:type="xs:string">
+      <value>http://localhost:11434</value>
+    </prop>
+    <prop oor:name="DefaultModel" oor:type="xs:string">
+      <value>llama3.2</value>
+    </prop>
+    <prop oor:name="ContextWindowTokens" oor:type="xs:int">
+      <value>8192</value>
+    </prop>
+    <prop oor:name="EnableResearchMCP" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+  </node>
+  <node oor:name="CloudSync">
+    <prop oor:name="DefaultStorageProvider" oor:type="xs:string">
+      <value>Nextcloud</value>
+    </prop>
+    <prop oor:name="EnableAutoWebDAVLocking" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+    <prop oor:name="EnableGoogleDrive" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+    <prop oor:name="EnableOneDrive" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+    <prop oor:name="EnableAmazonS3" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+  </node>
+  <node oor:name="PrivacyTelemetry">
+    <prop oor:name="AllowTelemetry" oor:type="xs:boolean">
+      <value>false</value>
+    </prop>
+    <prop oor:name="AllowCrashReporting" oor:type="xs:boolean">
+      <value>false</value>
+    </prop>
+    <prop oor:name="EnforceZeroTracking" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+  </node>
+  <node oor:name="MacroSecurity">
+    <prop oor:name="VBACompatibilityMode" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+    <prop oor:name="PythonScriptingEngine" oor:type="xs:boolean">
+      <value>true</value>
+    </prop>
+    <prop oor:name="MacroSecurityLevel" oor:type="xs:int">
+      <value>2</value>
+    </prop>
   </node>
   <node oor:name="Classification">
       <prop oor:name="Policy" oor:type="xs:short">

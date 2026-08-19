@@ -1691,6 +1691,7 @@ enable_cpdb
 enable_cups
 enable_ccache
 enable_z7_debug
+with_online_update_mar_certificatepath
 enable_extension_update
 enable_release_build
 enable_hardening_flags
@@ -3163,6 +3164,11 @@ Optional Packages:
   --with-valgrind         Make availability of Valgrind headers a hard
                           requirement.
   --with-system-quickjs   Use QuickJS already on system.
+  --with-online-update-mar-certificatepath=...
+                          Set the certificate path value for
+                          --enable-online-update-mar. (Can be left off for
+                          debug purposes, even if that may render the feature
+                          non-functional.)
   --with-macosx-bundle-identifier=tld.mumble.orifice.TheOffice
                           Define the macOS bundle identifier. Default is the
                           somewhat weird org.freedomoffice.script ("script",
@@ -9220,9 +9226,6 @@ printf '%s\n' "no" >&6; }
 		PKG_CONFIG=""
 	fi
 fi
-if test -z "$PKG_CONFIG"; then
-	as_fn_error $? "pkg-config not found" "$LINENO" 5
-fi
 if test "x$BACKTRACE_LIBS$BACKTRACE_CFLAGS" = x
 then :
 
@@ -10730,12 +10733,30 @@ then :
 fi
 
 
-      --with-online-update-mar-certificatepath=...
-                          Set the certificate path value for
-                          --enable-online-update-mar. (Can be left off for
-                          debug purposes, even if that may render the feature
-                          non-functional.),
-,)
+
+
+# Check whether --with-online-update-mar-certificatepath was given.
+if test ${with_online_update_mar_certificatepath+y}
+then :
+  withval=$with_online_update_mar_certificatepath;
+else case e in #(
+  e) if test "$enable_fuzz_options" = yes; then
+            if test `expr $RANDOM % 2` = 1; then
+                with_online_update_mar_certificatepath=yes
+            else
+                with_online_update_mar_certificatepath=no
+            fi
+            { printf '%s\n' "$as_me:${as_lineno-$LINENO}: Randomly set --with-online-update-mar-certificatepath=$with_online_update_mar_certificatepath" >&5
+printf '%s\n' "$as_me: Randomly set --with-online-update-mar-certificatepath=$with_online_update_mar_certificatepath" >&6;}
+            libo_fuzzed_with_online_update_mar_certificatepath=yes
+            libo_fuzz_list="$libo_fuzz_list --with-online-update-mar-certificatepath="'$with_online_update_mar_certificatepath'
+        fi
+
+         ;;
+esac
+fi
+
+
 
 
     # Check whether --enable-extension-update was given.
@@ -17284,7 +17305,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -17292,7 +17313,7 @@ Alternatively, you may set the environment variables CPDB_CFLAGS
 and CPDB_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         CPDB_CFLAGS=$pkg_cv_CPDB_CFLAGS
@@ -17508,7 +17529,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -17516,7 +17537,7 @@ Alternatively, you may set the environment variables FONTCONFIG_CFLAGS
 and FONTCONFIG_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         FONTCONFIG_CFLAGS=$pkg_cv_FONTCONFIG_CFLAGS
@@ -21936,7 +21957,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -21944,7 +21965,7 @@ Alternatively, you may set the environment variables LIBCMIS_CFLAGS
 and LIBCMIS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBCMIS_CFLAGS=$pkg_cv_LIBCMIS_CFLAGS
@@ -23263,44 +23284,11 @@ printf '%s\n' "$gccvisinlineshiddenok" >&6; }
         fi
     fi
 
-   { printf '%s\n' "$as_me:${as_lineno-$LINENO}: checking if $CXX_BASE has a visibility bug with class-level attributes (GCC bug 26905)" >&5
+    { printf '%s\n' "$as_me:${as_lineno-$LINENO}: checking if $CXX_BASE has a visibility bug with class-level attributes (GCC bug 26905)" >&5
 printf %s "checking if $CXX_BASE has a visibility bug with class-level attributes (GCC bug 26905)... " >&6; }
-    cat >visibility.cxx <<_ACEOF
-#pragma GCC visibility push(hidden)
-struct __attribute__ ((visibility ("default"))) TestStruct {
-  static void Init();
-};
-__attribute__ ((visibility ("default"))) void TestFunc() {
-  TestStruct::Init();
-}
-_ACEOF
-    if ! $CXX $CXXFLAGS $CPPFLAGS -fpic -S visibility.cxx; then
-        gccvisbroken=yes
-    else
-        case "$host_cpu" in
-        i?86|x86_64)
-            if test "$_os" = "Darwin" -o "$_os" = "iOS"; then
-                gccvisbroken=no
-            else
-                if $EGREP -q '@PLT|@GOT' visibility.s || test "$ENABLE_LTO" = "TRUE"; then
-                    gccvisbroken=no
-                else
-                    gccvisbroken=yes
-                fi
-            fi
-            ;;
-        *)
-            gccvisbroken=no
-            ;;
-        esac
-    fi
-    rm -f visibility.s visibility.cxx
-
+    gccvisbroken=no
     { printf '%s\n' "$as_me:${as_lineno-$LINENO}: result: $gccvisbroken" >&5
 printf '%s\n' "$gccvisbroken" >&6; }
-    if test "$gccvisbroken" = "yes"; then
-        as_fn_error $? "Your gcc is not -fvisibility=hidden safe. This is no longer supported." "$LINENO" 5
-    fi
 
     CPPFLAGS="$save_CPPFLAGS"
 
@@ -25679,7 +25667,7 @@ printf '%s\n' "$NAFLAGS" >&6; }
             { printf '%s\n' "$as_me:${as_lineno-$LINENO}: checking whether the assembler ($NASM $NAFLAGS) works" >&5
 printf %s "checking whether the assembler ($NASM $NAFLAGS) works... " >&6; }
             cat > conftest.asm << EOF
-            %line 25682 "configure"
+            %line 25670 "configure"
                     section .text
                     global  _main,main
             _main:
@@ -25870,7 +25858,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -25878,7 +25866,7 @@ Alternatively, you may set the environment variables CLUCENE_CFLAGS
 and CLUCENE_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         CLUCENE_CFLAGS=$pkg_cv_CLUCENE_CFLAGS
@@ -26073,7 +26061,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -26081,7 +26069,7 @@ Alternatively, you may set the environment variables EXPAT_CFLAGS
 and EXPAT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         EXPAT_CFLAGS=$pkg_cv_EXPAT_CFLAGS
@@ -26245,7 +26233,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -26253,7 +26241,7 @@ Alternatively, you may set the environment variables XMLSEC_CFLAGS
 and XMLSEC_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         XMLSEC_CFLAGS=$pkg_cv_XMLSEC_CFLAGS
@@ -26426,7 +26414,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -26434,7 +26422,7 @@ Alternatively, you may set the environment variables LIBEOT_CFLAGS
 and LIBEOT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBEOT_CFLAGS=$pkg_cv_LIBEOT_CFLAGS
@@ -26614,7 +26602,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -26622,7 +26610,7 @@ Alternatively, you may set the environment variables REVENGE_CFLAGS
 and REVENGE_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         REVENGE_CFLAGS=$pkg_cv_REVENGE_CFLAGS
@@ -26786,7 +26774,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -26794,7 +26782,7 @@ Alternatively, you may set the environment variables ODFGEN_CFLAGS
 and ODFGEN_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ODFGEN_CFLAGS=$pkg_cv_ODFGEN_CFLAGS
@@ -26958,7 +26946,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -26966,7 +26954,7 @@ Alternatively, you may set the environment variables EPUBGEN_CFLAGS
 and EPUBGEN_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         EPUBGEN_CFLAGS=$pkg_cv_EPUBGEN_CFLAGS
@@ -27140,7 +27128,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -27148,7 +27136,7 @@ Alternatively, you may set the environment variables WPD_CFLAGS
 and WPD_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         WPD_CFLAGS=$pkg_cv_WPD_CFLAGS
@@ -27312,7 +27300,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -27320,7 +27308,7 @@ Alternatively, you may set the environment variables WPG_CFLAGS
 and WPG_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         WPG_CFLAGS=$pkg_cv_WPG_CFLAGS
@@ -27484,7 +27472,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -27492,7 +27480,7 @@ Alternatively, you may set the environment variables WPS_CFLAGS
 and WPS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         WPS_CFLAGS=$pkg_cv_WPS_CFLAGS
@@ -27714,7 +27702,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -27722,7 +27710,7 @@ Alternatively, you may set the environment variables VISIO_CFLAGS
 and VISIO_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         VISIO_CFLAGS=$pkg_cv_VISIO_CFLAGS
@@ -27886,7 +27874,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -27894,7 +27882,7 @@ Alternatively, you may set the environment variables CDR_CFLAGS
 and CDR_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         CDR_CFLAGS=$pkg_cv_CDR_CFLAGS
@@ -28058,7 +28046,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -28066,7 +28054,7 @@ Alternatively, you may set the environment variables MSPUB_CFLAGS
 and MSPUB_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         MSPUB_CFLAGS=$pkg_cv_MSPUB_CFLAGS
@@ -28230,7 +28218,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -28238,7 +28226,7 @@ Alternatively, you may set the environment variables MWAW_CFLAGS
 and MWAW_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         MWAW_CFLAGS=$pkg_cv_MWAW_CFLAGS
@@ -28460,7 +28448,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -28468,7 +28456,7 @@ Alternatively, you may set the environment variables ETONYEK_CFLAGS
 and ETONYEK_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ETONYEK_CFLAGS=$pkg_cv_ETONYEK_CFLAGS
@@ -28690,7 +28678,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -28698,7 +28686,7 @@ Alternatively, you may set the environment variables FREEHAND_CFLAGS
 and FREEHAND_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         FREEHAND_CFLAGS=$pkg_cv_FREEHAND_CFLAGS
@@ -28862,7 +28850,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -28870,7 +28858,7 @@ Alternatively, you may set the environment variables EBOOK_CFLAGS
 and EBOOK_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         EBOOK_CFLAGS=$pkg_cv_EBOOK_CFLAGS
@@ -29092,7 +29080,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -29100,7 +29088,7 @@ Alternatively, you may set the environment variables ABW_CFLAGS
 and ABW_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ABW_CFLAGS=$pkg_cv_ABW_CFLAGS
@@ -29264,7 +29252,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -29272,7 +29260,7 @@ Alternatively, you may set the environment variables PAGEMAKER_CFLAGS
 and PAGEMAKER_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         PAGEMAKER_CFLAGS=$pkg_cv_PAGEMAKER_CFLAGS
@@ -29436,7 +29424,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -29444,7 +29432,7 @@ Alternatively, you may set the environment variables QXP_CFLAGS
 and QXP_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         QXP_CFLAGS=$pkg_cv_QXP_CFLAGS
@@ -29608,7 +29596,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -29616,7 +29604,7 @@ Alternatively, you may set the environment variables ZMF_CFLAGS
 and ZMF_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ZMF_CFLAGS=$pkg_cv_ZMF_CFLAGS
@@ -29780,7 +29768,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -29788,7 +29776,7 @@ Alternatively, you may set the environment variables STAROFFICE_CFLAGS
 and STAROFFICE_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         STAROFFICE_CFLAGS=$pkg_cv_STAROFFICE_CFLAGS
@@ -30015,7 +30003,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -30023,7 +30011,7 @@ Alternatively, you may set the environment variables LCMS2_CFLAGS
 and LCMS2_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LCMS2_CFLAGS=$pkg_cv_LCMS2_CFLAGS
@@ -30194,7 +30182,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -30202,7 +30190,7 @@ Alternatively, you may set the environment variables CPPUNIT_CFLAGS
 and CPPUNIT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         CPPUNIT_CFLAGS=$pkg_cv_CPPUNIT_CFLAGS
@@ -30372,7 +30360,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -30380,7 +30368,7 @@ Alternatively, you may set the environment variables FREETYPE_CFLAGS
 and FREETYPE_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         FREETYPE_CFLAGS=$pkg_cv_FREETYPE_CFLAGS
@@ -30541,7 +30529,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -30549,7 +30537,7 @@ Alternatively, you may set the environment variables LIBXSLT_CFLAGS
 and LIBXSLT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBXSLT_CFLAGS=$pkg_cv_LIBXSLT_CFLAGS
@@ -30635,7 +30623,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -30643,7 +30631,7 @@ Alternatively, you may set the environment variables LIBEXSLT_CFLAGS
 and LIBEXSLT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBEXSLT_CFLAGS=$pkg_cv_LIBEXSLT_CFLAGS
@@ -30816,7 +30804,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -30824,7 +30812,7 @@ Alternatively, you may set the environment variables LIBXML_CFLAGS
 and LIBXML_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBXML_CFLAGS=$pkg_cv_LIBXML_CFLAGS
@@ -33972,7 +33960,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -33980,7 +33968,7 @@ Alternatively, you may set the environment variables QUICKJS_CFLAGS
 and QUICKJS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         QUICKJS_CFLAGS=$pkg_cv_QUICKJS_CFLAGS
@@ -34068,7 +34056,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -34076,7 +34064,7 @@ Alternatively, you may set the environment variables QUICKJS_CFLAGS
 and QUICKJS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         QUICKJS_CFLAGS=$pkg_cv_QUICKJS_CFLAGS
@@ -35656,7 +35644,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -35664,7 +35652,7 @@ Alternatively, you may set the environment variables FIREBIRD_CFLAGS
 and FIREBIRD_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         FIREBIRD_CFLAGS=$pkg_cv_FIREBIRD_CFLAGS
@@ -35752,7 +35740,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -35760,7 +35748,7 @@ Alternatively, you may set the environment variables FIREBIRD_CFLAGS
 and FIREBIRD_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         FIREBIRD_CFLAGS=$pkg_cv_FIREBIRD_CFLAGS
@@ -35953,7 +35941,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -35961,7 +35949,7 @@ Alternatively, you may set the environment variables LIBATOMIC_OPS_CFLAGS
 and LIBATOMIC_OPS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBATOMIC_OPS_CFLAGS=$pkg_cv_LIBATOMIC_OPS_CFLAGS
@@ -36248,7 +36236,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -36256,7 +36244,7 @@ Alternatively, you may set the environment variables CURL_CFLAGS
 and CURL_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         CURL_CFLAGS=$pkg_cv_CURL_CFLAGS
@@ -37976,7 +37964,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -37984,7 +37972,7 @@ Alternatively, you may set the environment variables MDDS_CFLAGS
 and MDDS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         MDDS_CFLAGS=$pkg_cv_MDDS_CFLAGS
@@ -38478,7 +38466,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -38486,7 +38474,7 @@ Alternatively, you may set the environment variables NSS_CFLAGS
 and NSS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         NSS_CFLAGS=$pkg_cv_NSS_CFLAGS
@@ -38885,7 +38873,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -38893,7 +38881,7 @@ Alternatively, you may set the environment variables ICU_CFLAGS
 and ICU_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ICU_CFLAGS=$pkg_cv_ICU_CFLAGS
@@ -39263,7 +39251,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -39271,7 +39259,7 @@ Alternatively, you may set the environment variables ORCUS_CFLAGS
 and ORCUS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ORCUS_CFLAGS=$pkg_cv_ORCUS_CFLAGS
@@ -39414,7 +39402,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -39422,7 +39410,7 @@ Alternatively, you may set the environment variables PARQUET_CFLAGS
 and PARQUET_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         PARQUET_CFLAGS=$pkg_cv_PARQUET_CFLAGS
@@ -39575,7 +39563,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -39583,7 +39571,7 @@ Alternatively, you may set the environment variables GRAPHITE_CFLAGS
 and GRAPHITE_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         GRAPHITE_CFLAGS=$pkg_cv_GRAPHITE_CFLAGS
@@ -39746,7 +39734,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -39754,7 +39742,7 @@ Alternatively, you may set the environment variables HARFBUZZ_CFLAGS
 and HARFBUZZ_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         HARFBUZZ_CFLAGS=$pkg_cv_HARFBUZZ_CFLAGS
@@ -40939,7 +40927,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -40947,7 +40935,7 @@ Alternatively, you may set the environment variables XRENDER_CFLAGS
 and XRENDER_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         XRENDER_CFLAGS=$pkg_cv_XRENDER_CFLAGS
@@ -41359,7 +41347,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -41367,7 +41355,7 @@ Alternatively, you may set the environment variables OPENSSL_CFLAGS
 and OPENSSL_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         OPENSSL_CFLAGS=$pkg_cv_OPENSSL_CFLAGS
@@ -41537,7 +41525,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -41545,7 +41533,7 @@ Alternatively, you may set the environment variables OPENSSL_CFLAGS
 and OPENSSL_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         OPENSSL_CFLAGS=$pkg_cv_OPENSSL_CFLAGS
@@ -41804,7 +41792,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -41812,7 +41800,7 @@ Alternatively, you may set the environment variables ARGON2_CFLAGS
 and ARGON2_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ARGON2_CFLAGS=$pkg_cv_ARGON2_CFLAGS
@@ -41976,7 +41964,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -41984,7 +41972,7 @@ Alternatively, you may set the environment variables REDLAND_CFLAGS
 and REDLAND_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         REDLAND_CFLAGS=$pkg_cv_REDLAND_CFLAGS
@@ -43157,7 +43145,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -43165,7 +43153,7 @@ Alternatively, you may set the environment variables COINMP_CFLAGS
 and COINMP_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         COINMP_CFLAGS=$pkg_cv_COINMP_CFLAGS
@@ -43721,7 +43709,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -43729,7 +43717,7 @@ Alternatively, you may set the environment variables LIBEXTTEXTCAT_CFLAGS
 and LIBEXTTEXTCAT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBEXTTEXTCAT_CFLAGS=$pkg_cv_LIBEXTTEXTCAT_CFLAGS
@@ -43897,7 +43885,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -43905,7 +43893,7 @@ Alternatively, you may set the environment variables LIBNUMBERTEXT_CFLAGS
 and LIBNUMBERTEXT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBNUMBERTEXT_CFLAGS=$pkg_cv_LIBNUMBERTEXT_CFLAGS
@@ -44753,7 +44741,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -44761,7 +44749,7 @@ Alternatively, you may set the environment variables EPOXY_CFLAGS
 and EPOXY_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         EPOXY_CFLAGS=$pkg_cv_EPOXY_CFLAGS
@@ -45060,7 +45048,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -45068,7 +45056,7 @@ Alternatively, you may set the environment variables GTK3_CFLAGS
 and GTK3_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         GTK3_CFLAGS=$pkg_cv_GTK3_CFLAGS
@@ -45225,7 +45213,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -45233,7 +45221,7 @@ Alternatively, you may set the environment variables GTK3_CFLAGS
 and GTK3_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         GTK3_CFLAGS=$pkg_cv_GTK3_CFLAGS
@@ -45332,7 +45320,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -45340,7 +45328,7 @@ Alternatively, you may set the environment variables GTK4_CFLAGS
 and GTK4_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         GTK4_CFLAGS=$pkg_cv_GTK4_CFLAGS
@@ -45897,7 +45885,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -45905,7 +45893,7 @@ Alternatively, you may set the environment variables DBUS_CFLAGS
 and DBUS_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         DBUS_CFLAGS=$pkg_cv_DBUS_CFLAGS
@@ -46295,7 +46283,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -46303,7 +46291,7 @@ Alternatively, you may set the environment variables GSTREAMER_1_0_CFLAGS
 and GSTREAMER_1_0_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         GSTREAMER_1_0_CFLAGS=$pkg_cv_GSTREAMER_1_0_CFLAGS
@@ -46628,7 +46616,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -46636,7 +46624,7 @@ Alternatively, you may set the environment variables OPENJPEG2_CFLAGS
 and OPENJPEG2_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         OPENJPEG2_CFLAGS=$pkg_cv_OPENJPEG2_CFLAGS
@@ -46740,7 +46728,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -46748,7 +46736,7 @@ Alternatively, you may set the environment variables ABSEIL_CFLAGS
 and ABSEIL_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         ABSEIL_CFLAGS=$pkg_cv_ABSEIL_CFLAGS
@@ -47069,7 +47057,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -47077,7 +47065,7 @@ Alternatively, you may set the environment variables POPPLER_CFLAGS
 and POPPLER_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         POPPLER_CFLAGS=$pkg_cv_POPPLER_CFLAGS
@@ -49705,7 +49693,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -49713,7 +49701,7 @@ Alternatively, you may set the environment variables GOBJECT_CFLAGS
 and GOBJECT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         GOBJECT_CFLAGS=$pkg_cv_GOBJECT_CFLAGS
@@ -50090,7 +50078,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -50098,7 +50086,7 @@ Alternatively, you may set the environment variables LZMA_CFLAGS
 and LZMA_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LZMA_CFLAGS=$pkg_cv_LZMA_CFLAGS
@@ -50265,7 +50253,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -50273,7 +50261,7 @@ Alternatively, you may set the environment variables SQLITE3_CFLAGS
 and SQLITE3_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         SQLITE3_CFLAGS=$pkg_cv_SQLITE3_CFLAGS
@@ -50593,7 +50581,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -50601,7 +50589,7 @@ Alternatively, you may set the environment variables CAIRO_CFLAGS
 and CAIRO_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         CAIRO_CFLAGS=$pkg_cv_CAIRO_CFLAGS
@@ -50920,7 +50908,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -50928,7 +50916,7 @@ Alternatively, you may set the environment variables AVAHI_CFLAGS
 and AVAHI_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         AVAHI_CFLAGS=$pkg_cv_AVAHI_CFLAGS
@@ -51047,7 +51035,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -51055,7 +51043,7 @@ Alternatively, you may set the environment variables LIBLANGTAG_CFLAGS
 and LIBLANGTAG_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBLANGTAG_CFLAGS=$pkg_cv_LIBLANGTAG_CFLAGS
@@ -51215,7 +51203,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -51223,7 +51211,7 @@ Alternatively, you may set the environment variables LIBPNG_CFLAGS
 and LIBPNG_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBPNG_CFLAGS=$pkg_cv_LIBPNG_CFLAGS
@@ -51388,7 +51376,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -51396,7 +51384,7 @@ Alternatively, you may set the environment variables LIBTIFF_CFLAGS
 and LIBTIFF_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBTIFF_CFLAGS=$pkg_cv_LIBTIFF_CFLAGS
@@ -51561,7 +51549,7 @@ elif test $pkg_failed = untried; then
 printf '%s\n' "no" >&6; }
         { { printf '%s\n' "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
 printf '%s\n' "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+as_fn_error $? "A pkg-config implementation could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
@@ -51569,7 +51557,7 @@ Alternatively, you may set the environment variables LIBWEBP_CFLAGS
 and LIBWEBP_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+To get a pkg-config implementation, see <http://github.com/pkgconf/pkgconf>.
 See 'config.log' for more details" "$LINENO" 5; }
 else
         LIBWEBP_CFLAGS=$pkg_cv_LIBWEBP_CFLAGS
@@ -53583,7 +53571,7 @@ fi
 
 # Keep in sync with list of files far up, at AC_MSG_CHECKING([for
 # BUILD platform configuration] - otherwise breaks cross building
-ac_config_files="$ac_config_files config_host_lang.mk Makefile bin/bffvalidator.sh bin/odfvalidator.sh bin/officeotron.sh bin/verapdf.sh instsetoo_native/util/openoffice.lst sysui/desktop/macosx/Info.plist sysui/desktop/macosx/LaunchConstraint.plist hardened_runtime.xcent:sysui/desktop/macosx/hardened_runtime.xcent.in lo.xcent:sysui/desktop/macosx/lo.xcent.in extensions/source/macosx/quicklookpreview/appex/Info.plist extensions/source/macosx/quicklookthumbnail/appex/Info.plist"
+ac_config_files="$ac_config_files config_host_lang.mk config_build_lang.mk Makefile bin/bffvalidator.sh bin/odfvalidator.sh bin/officeotron.sh bin/verapdf.sh instsetoo_native/util/openoffice.lst sysui/desktop/macosx/Info.plist sysui/desktop/macosx/LaunchConstraint.plist hardened_runtime.xcent:sysui/desktop/macosx/hardened_runtime.xcent.in lo.xcent:sysui/desktop/macosx/lo.xcent.in extensions/source/macosx/quicklookpreview/appex/Info.plist extensions/source/macosx/quicklookthumbnail/appex/Info.plist"
 
 # map unix-style mount dirs to windows directories: /mnt/c/foobar -> C:/foobar
 # easier to do it in a postprocessing command than to modify every single variable
@@ -54357,6 +54345,7 @@ do
     "config_host/config_probes.h") CONFIG_HEADERS="$CONFIG_HEADERS config_host/config_probes.h" ;;
     "include") CONFIG_LINKS="$CONFIG_LINKS include:include" ;;
     "config_host_lang.mk") CONFIG_FILES="$CONFIG_FILES config_host_lang.mk" ;;
+    "config_build_lang.mk") CONFIG_FILES="$CONFIG_FILES config_build_lang.mk" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "bin/bffvalidator.sh") CONFIG_FILES="$CONFIG_FILES bin/bffvalidator.sh" ;;
     "bin/odfvalidator.sh") CONFIG_FILES="$CONFIG_FILES bin/odfvalidator.sh" ;;

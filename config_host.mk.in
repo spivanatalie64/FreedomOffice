@@ -822,6 +822,7 @@ export GET_TASK_ALLOW_ENTITLEMENT=@GET_TASK_ALLOW_ENTITLEMENT@
 export ZXCVBN_CFLAGS=$(gb_SPACE)@ZXCVBN_CFLAGS@
 
 # lang-related stuff
+gb_Side ?= host
 include $(BUILDDIR)/config_$(gb_Side)_lang.mk
 
 # tarball names

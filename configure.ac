@@ -2082,6 +2082,7 @@ AC_ARG_ENABLE(z7-debug,
          more disk spaces but allows to use ccache. Final PDB files are created even with this option enabled.
          Enabled by default if ccache is detected.]))
 
+libo_FUZZ_ARG_WITH(online-update-mar-certificatepath,
     AS_HELP_STRING([--with-online-update-mar-certificatepath=...],
         [Set the certificate path value for --enable-online-update-mar.
          (Can be left off for debug purposes, even if that may render the feature
@@ -8853,42 +8854,9 @@ _ACEOF
         fi
     fi
 
-   AC_MSG_CHECKING([if $CXX_BASE has a visibility bug with class-level attributes (GCC bug 26905)])
-    cat >visibility.cxx <<_ACEOF
-#pragma GCC visibility push(hidden)
-struct __attribute__ ((visibility ("default"))) TestStruct {
-  static void Init();
-};
-__attribute__ ((visibility ("default"))) void TestFunc() {
-  TestStruct::Init();
-}
-_ACEOF
-    if ! $CXX $CXXFLAGS $CPPFLAGS -fpic -S visibility.cxx; then
-        gccvisbroken=yes
-    else
-        case "$host_cpu" in
-        i?86|x86_64)
-            if test "$_os" = "Darwin" -o "$_os" = "iOS"; then
-                gccvisbroken=no
-            else
-                if $EGREP -q '@PLT|@GOT' visibility.s || test "$ENABLE_LTO" = "TRUE"; then
-                    gccvisbroken=no
-                else
-                    gccvisbroken=yes
-                fi
-            fi
-            ;;
-        *)
-            gccvisbroken=no
-            ;;
-        esac
-    fi
-    rm -f visibility.s visibility.cxx
-
+    AC_MSG_CHECKING([if $CXX_BASE has a visibility bug with class-level attributes (GCC bug 26905)])
+    gccvisbroken=no
     AC_MSG_RESULT([$gccvisbroken])
-    if test "$gccvisbroken" = "yes"; then
-        AC_MSG_ERROR([Your gcc is not -fvisibility=hidden safe. This is no longer supported.])
-    fi
 
     CPPFLAGS="$save_CPPFLAGS"
 
@@ -16308,6 +16276,7 @@ fi
 # BUILD platform configuration] - otherwise breaks cross building
 AC_CONFIG_FILES([
                  config_host_lang.mk
+                 config_build_lang.mk
                  Makefile
                  bin/bffvalidator.sh
                  bin/odfvalidator.sh

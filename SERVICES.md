@@ -1,19 +1,16 @@
 # FreedomOffice Services Configuration
 
-FreedomOffice is configured to use Free and Open Source (FOSS) alternatives for all cloud services. This document explains how to set up and use each service.
+FreedomOffice is configured to support major cloud providers (Google Drive, Microsoft OneDrive, Amazon S3, Adobe Document Cloud) as well as self-hosted FOSS alternatives (Nextcloud, ownCloud, Alfresco, Nuxeo). This document explains how to set up and use each service.
 
 ## Table of Contents
 
-1. [Nextcloud WebDAV Integration](#1-nextcloud-webdav-integration)
-2. [ownCloud WebDAV Integration](#2-owncloud-webdav-integration)
-3. [Alfresco CMIS Integration](#3-alfresco-cmis-integration)
-4. [Nuxeo CMIS Integration](#4-nuxeo-cmis-integration)
+1. [Nextcloud & ownCloud Integration](#1-nextcloud-webdav-integration)
+2. [Google Drive & Microsoft OneDrive Integration](#2-google-drive--microsoft-onedrive-integration)
+3. [Amazon S3 & Adobe Document Cloud](#3-amazon-s3--adobe-document-cloud)
+4. [Alfresco & Nuxeo CMIS Integration](#4-alfresco-cmis-integration)
 5. [Matrix/Element Collaboration](#5-matrixelement-collaboration)
-6. [Jitsi Meet for Presentations](#6-jitsi-meet-for-presentations)
-7. [Local AI Setup (Ollama)](#7-local-ai-setup-ollama)
-8. [Email Integration with Thunderbird](#8-email-integration-with-thunderbird)
-9. [FOSS Service Reference](#9-foss-service-reference)
-10. [Troubleshooting](#10-troubleshooting)
+6. [Local AI Setup (Ollama)](#6-local-ai-setup-ollama)
+7. [Troubleshooting](#7-troubleshooting)
 
 ---
 

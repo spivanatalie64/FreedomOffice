@@ -8,10 +8,9 @@
 
 <img align="right" width="150" src="https://opensource.org/wp-content/uploads/2009/06/OSIApproved.svg">
 
-FreedomOffice is an integrated office suite forked from [LibreOffice](https://www.libreoffice.org/)
-and compatible with most document formats and standards, including Microsoft Office
-file formats (.docx, .xlsx, .pptx). FreedomOffice is free and open source software,
-licensed under the Mozilla Public License v2.0 and GNU Lesser General Public License v3.0.
+FreedomOffice is an integrated office suite designed as a **Microsoft Office visual & workflow clone** powered by the full, rock-solid **LibreOffice engine**. It is compatible with all document formats and standards, including native Microsoft Office file formats (.docx, .xlsx, .pptx) as well as OpenDocument Format (.odt, .ods, .odp). FreedomOffice is free and open source software, licensed under the Mozilla Public License v2.0 and GNU Lesser General Public License v3.0.
+
+FreedomOffice combines a modern Microsoft Office Ribbon/NotebookBar user experience, Microsoft Office-like application branding (FreedomWriter, FreedomSheet, FreedomShow, FreedomBase, FreedomEquation), and seamless format compatibility with 100% complete LibreOffice engine features, extensions, and macro ecosystem support.
 
 FreedomOffice is developed by [Natalie Spiva - AcreetionOS Project](https://acreetionos.org).
 It is a fork of LibreOffice (Copyright The Document Foundation) and is

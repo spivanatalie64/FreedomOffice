@@ -18,7 +18,7 @@ You → @FreedomAI "write a memo about Q3 budget"
 
 ## Configuration
 
-FreedomAI is configured in `.opencode/opencode.json`. The default setup uses Anthropic Claude, but you can swap to any provider.
+FreedomAI is configured in `.opencode/opencode.json`. The default setup is configured to use a **100% local Ollama instance** (`ollama/llama3.2`), keeping all AI document generation entirely on your machine.
 
 ### Using Local LLMs (100% Private, No Internet Needed)
 
